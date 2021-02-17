@@ -83,11 +83,11 @@ class Visualize:
         if normal is None:
             normal = np.array([1,0,0])
         if p1 is None:
-            p1 = np.array([-1,-1,0])
+            p1 = np.array([-0.5,-0.5,0])
         if p2 is None:
-            p2 = np.array([1,-1,0])
+            p2 = np.array([0.5,-0.5,0])
         if p3 is None:
-            p3 = np.array([0,2,0])
+            p3 = np.array([0,1,0])
         if inc_pts is None:
             inc_pts = True
         
