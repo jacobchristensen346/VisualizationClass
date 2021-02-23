@@ -83,11 +83,11 @@ class Visualize:
         if normal is None:
             normal = np.array([1,0,0])
         if p1 is None:
-            p1 = np.array([-0.5,-0.5,0])
+            p1 = np.array([0,1,0])
         if p2 is None:
-            p2 = np.array([0.5,-0.5,0])
+            p2 = np.array([1,0,0])
         if p3 is None:
-            p3 = np.array([0,1,0])
+            p3 = np.array([0,0,1])
         if inc_pts is None:
             inc_pts = True
         
@@ -173,7 +173,7 @@ class Visualize:
         return rarray1, m1
     
     
-    def plot_slice(self, sliced_plane, contour=None, cmin=None, cmax=None, levels=None):
+    def plot_slice(self, sliced_plane, contour=None, smartscale=None, cmin=None, cmax=None, levels=None):
     
         """
         Args:
@@ -181,8 +181,10 @@ class Visualize:
             sliced_plane: slice returned by "make_slice" function
             cmin, cmax: Sets the values to which the maximum and minimum color values will be assigned. If no value is
                 given for both cmin and cmax, default scaling will be used by matplotlib
-            plt_cont: If True, will plot the calculated slice as a contour plot. 
+            contour: If True, will plot the calculated slice as a contour plot. 
                 If False, as a continuous surface
+            smartscale: If True, will scale the colormap for the user by setting cmin and cmax to the range
+                of 2 standards deviations (intended to eliminate outliers)
             levels: designates the number of levels the contour plot should have. Required if user designates
                 cmin and cmax while contour == True
         
@@ -193,7 +195,17 @@ class Visualize:
         """
         if contour is None:
             contour = False
-         
+        if smartscale is None:
+            smartscale = False
+        
+        if smartscale == True:
+            data = np.ravel(sliced_plane)
+            n = len(data)
+            mean = sum(data) / n
+            std_dev = np.sqrt(sum((x - mean) ** 2 for x in data) / n)
+            cmin = mean - 2*std_dev
+            cmax = mean + 2*std_dev
+        
         #now we plot either a contour or continuous
         if contour == True:
             
