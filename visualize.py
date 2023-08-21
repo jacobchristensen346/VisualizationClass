@@ -49,13 +49,13 @@ class Visualize:
         return normal, cen_pt
     
     
-    def make_slice(self, len_a=None, len_b=None, dr=None, use_norm=None, cen_pt=None, normal=None, 
+    def make_slice(self, side_len=None, dr=None, use_norm=None, cen_pt=None, normal=None, 
                    p1=None, p2=None, p3=None, inc_pts=None):
         """
         
         Args:
         
-            len_a/len_b: the side length of the rectangular slice to be taken through the data
+            side_len: the side length of the square slice to be taken through the data
             dr: determines the spacing of the grid (if dr=0.5, then there are 2 measurements every angstrom)
             use_norm: When True, will create slice from user given normal vector and center point. When
                 false, will create slice from three points given by the user
@@ -137,10 +137,10 @@ class Visualize:
                 print('Adjusted side_len to include 3 points specified. New side_len:', side_len)
     
         #now create an arbitrary slice
-        self.a = np.arange(-len_a / 2, len_a / 2, dr)
-        self.b = np.arange(-len_b / 2, len_b / 2, dr)
-        self.a = np.append(self.a, len_a / 2)
-        self.b = np.append(self.b, len_b / 2)
+        self.a = np.arange(-side_len / 2, side_len / 2, dr)
+        self.b = np.arange(-side_len / 2, side_len / 2, dr)
+        self.a = np.append(self.a, side_len / 2)
+        self.b = np.append(self.b, side_len / 2)
         A,B = np.meshgrid(self.a, self.b)
         locations = np.array([A.reshape(-1), B.reshape(-1), np.zeros(A.size)]) #the slice starts on the x-y plane
         #now move locations onto our two vectors, and add cen_pt to move slice into position
