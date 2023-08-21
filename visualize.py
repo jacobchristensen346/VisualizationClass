@@ -77,7 +77,7 @@ class Visualize:
         if use_norm is None:
             use_norm = True
         if side_len is None:
-            len_a = 10
+            side_len = 10
         if cen_pt is None:
             cen_pt = np.array([0, 0, 0])
         if normal is None:
